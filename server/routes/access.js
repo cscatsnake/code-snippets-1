@@ -4,7 +4,7 @@ const cookieController = require('../controllers/cookieController');
 const sessionController = require('../controllers/sessionController');
 const router = express.Router();
 
-router.post('/login',accessController.verifyUser, (req,res) => {
+router.post('/login',accessController.verifyUser, cookieController.setSSIDCookie, sessionController.startSession, (req,res) => {
   return res.redirect('/snippets');
 });
 	

@@ -11,7 +11,7 @@ cookieController.setSSIDCookie = (req, res, next) => {
     expires: expirationDate,
   });
   
-  return next;
+  return next();
 };
 
 module.exports = cookieController;
