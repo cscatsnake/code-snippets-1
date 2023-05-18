@@ -30,17 +30,10 @@ sessionController.isLoggedIn = async (req, res, next) => {
 sessionController.startSession = async (req, res, next) => {
   try {
     console.log('----- INSIDE sessionController.startSession -----');
-    const data = await Session.create({ cookieId: res.locals.user });
-    console.log('DATA FROM SESSION:', data);
-    if (data.status === 201) {
-      next();
-    } else {
-      next({
-        log: 'Error occurred in sessionController.startSession.',
-        status: 500,
-        message: { err: 'An error occurred' },
-      });
-    }
+    const session = new Session({ cookieId: res.locals.user });
+    await session.save();
+    console.log('DATA FROM SESSION:', session);
+    next();
   } catch (error) {
     next({
       log: 'Error occurred in sessionController.startSession.',
