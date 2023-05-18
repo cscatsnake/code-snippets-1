@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './Signup.scss';
 
-const Signup = ({ setModalVisible }) => {
+const Signup = ({ setModalVisible, setLoggedIn }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     let newAccount = {
@@ -22,6 +22,7 @@ const Signup = ({ setModalVisible }) => {
       .then((user) => {
         console.log(`You made a new account ${user}`);
         // hideJoin(event);
+        setLoggedIn(user);
         setModalVisible(false);
       })
       .catch((err) => console.log('error from Join-Post-Request ERROR: ', err));

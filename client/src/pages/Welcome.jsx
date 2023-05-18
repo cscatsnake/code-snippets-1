@@ -21,9 +21,8 @@ const Welcome = ({ setLoggedIn }) => {
       .then(console.log(JSON.stringify({ username, password })))
       //.then((res) => res.json())
       .then((user) => {
-        console.log('hello');
         console.log('You loggedin', user);
-        setLoggedIn('fake data');
+        setLoggedIn(user);
       })
       .catch((err) =>
         console.log('error from Login-Post-Request ERROR: ', err)
@@ -84,7 +83,9 @@ const Welcome = ({ setLoggedIn }) => {
         </a>
       </form>
 
-      {modalVisible && <Signup setModalVisible={setModalVisible} />}
+      {modalVisible && (
+        <Signup setModalVisible={setModalVisible} setLoggedIn={setLoggedIn} />
+      )}
     </div>
   );
 };
