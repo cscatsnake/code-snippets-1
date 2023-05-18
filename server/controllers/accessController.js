@@ -8,9 +8,9 @@ const accessController = {};
 accessController.createUser = async (req, res, next) => {
   console.log('----- INSIDE userController.createUser -----');
   const { username, password, first, last } = req.body;
-  if (!username || !password)
+  if (!username || !password || !first || !last)
     return next({
-      log: 'Missing username or password in input field',
+      log: 'Missing text in input field',
       status: 400,
       message: { err: 'An error occurred' },
     });
@@ -18,9 +18,12 @@ accessController.createUser = async (req, res, next) => {
   try {
     const salt = await bcrypt.genSalt(saltRounds);
     const hashedPassword = await bcrypt.hash(password, salt);
-    const newUser = new User.create({ username, password: hashedPassword, first, last });
+    console.log('hashedPword:', hashedPassword);
+    const newUser = new User ({ username, password: hashedPassword, first, last });
     const user = await newUser.save();
+    console.log(user);
     res.locals.user = user._id;
+    console.log(user);
     return next();
   } catch (err) {
     return next({
@@ -42,7 +45,7 @@ accessController.verifyUser = async (req, res, next) => {
     });
 
   try {
-    const data = User.findOne({ username });
+    const data = await User.findOne({ username });
     if (data) {
       const result = await bcrypt.compare(password, data.password);
       if (result) {
