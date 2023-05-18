@@ -81,7 +81,7 @@ const SnippetCard = ({ selectedSnippet, getSnippet }) => {
   return (
     <>
       <Card className={styles.card}>
-        <DarkModeToggler />
+        {/* <DarkModeToggler /> */}
         <Snippet
           editSnippet={editSnippet}
           setEditButtonState={setEditButtonState}
