@@ -11,6 +11,14 @@ const mongoURI =
 
 mongoose.connect(mongoURI);
 
+mongoose.connection.on('connected', () => {
+  console.log('Connected to MongoDB database');
+});
+
+mongoose.connection.on('error', (err) => {
+  console.error('Failed to connect to MongoDB database', err);
+});
+
 const snippetsRouter = require('./routes/snippets');
 const accessRouter = require('./routes/access');
 
